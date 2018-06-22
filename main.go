@@ -47,7 +47,8 @@ func main() {
 	wg := &sync.WaitGroup{}                                            // Goroutines can add themselves to this to be waited on so that they finish
 
 	// set up database and update schema
-	err = cockroachDBClient.Connect()
+	cockroachDBClient := NewCockroachDBClient(*cockroachDatabase, *cockroachHost, *cockroachInsecure, *cockroachCertificateDir, *cockroachPort, *cockroachUser, *cockroachPassword)
+	err := cockroachDBClient.Connect()
 	if err != nil {
 		log.Warn().Err(err).Msg("Failed connecting to CockroachDB")
 	}
