@@ -12,9 +12,6 @@ metadata:
     app: estafette-ci-db-migrator
     team: tooling
 spec:
-  selector:
-    matchLabels:
-      app: estafette-ci-db-migrator
   template:
     metadata:
       labels:
