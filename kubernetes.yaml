@@ -12,7 +12,6 @@ metadata:
     app: estafette-ci-db-migrator
     team: tooling
 spec:
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: estafette-ci-db-migrator
@@ -21,11 +20,6 @@ spec:
       labels:
         app: estafette-ci-db-migrator
         team: tooling
-        version: ${VERSION}
-      annotations:
-        prometheus.io/scrape: "true"
-        prometheus.io/port: "9001"
-        prometheus.io/scrape-nginx-sidecar: "true"
     spec:
       affinity:
         nodeAffinity:
