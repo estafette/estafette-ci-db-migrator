@@ -3,10 +3,7 @@ package main
 import (
 	stdlog "log"
 	"os"
-	"os/signal"
 	"runtime"
-	"sync"
-	"syscall"
 
 	"github.com/alecthomas/kingpin"
 	"github.com/rs/zerolog"
@@ -40,34 +37,18 @@ func main() {
 	// configure json logging
 	initLogging()
 
-	// define channels and waitgroup to gracefully shutdown the application
-	sigs := make(chan os.Signal, 1)                                    // Create channel to receive OS signals
-	stop := make(chan struct{})                                        // Create channel to receive stop signal
-	signal.Notify(sigs, os.Interrupt, syscall.SIGTERM, syscall.SIGINT) // Register the sigs channel to receieve SIGTERM
-	wg := &sync.WaitGroup{}                                            // Goroutines can add themselves to this to be waited on so that they finish
-
 	// set up database and update schema
 	cockroachDBClient := NewCockroachDBClient(*cockroachDatabase, *cockroachHost, *cockroachInsecure, *cockroachCertificateDir, *cockroachPort, *cockroachUser, *cockroachPassword)
 	err := cockroachDBClient.Connect()
 	if err != nil {
-		log.Warn().Err(err).Msg("Failed connecting to CockroachDB")
+		log.Warn().Err(err).Msg("Failed connecting to database")
 	}
 	err = cockroachDBClient.MigrateSchema()
 	if err != nil {
-		log.Warn().Err(err).Msg("Failed migrating schema of CockroachDB")
+		log.Warn().Err(err).Msg("Failed migrating database schema")
 	}
 
-	// wait for graceful shutdown to finish
-	<-sigs // Wait for signals (this hangs until a signal arrives)
-	log.Debug().Msg("Shutting down...")
-
-	log.Debug().Msg("Stopping goroutines...")
-	close(stop) // Tell goroutines to stop themselves
-
-	log.Debug().Msg("Awaiting waitgroup...")
-	wg.Wait() // Wait for all to be stopped
-
-	log.Info().Msg("Server gracefully stopped")
+	log.Info().Msg("Successfully migrated database schema")
 }
 
 func initLogging() {
