@@ -17,6 +17,16 @@ git clone git@github.com:estafette/estafette-ci-db-migrator.git
 cd estafette-ci-db-migrator
 ```
 
+To add a new migration script
+
+```bash
+go get -u github.com/pressly/goose/cmd/goose
+cd migrations
+goose create create_some_table sql
+```
+
+And then edit the newly created script in the migrations folder.
+
 Before committing your changes run
 
 ```bash
