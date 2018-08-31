@@ -30,7 +30,7 @@ spec:
                 - "true"
       containers:
       - name: estafette-ci-db-migrator
-        image: estafette/estafette-ci-db-migrator:${GO_PIPELINE_LABEL}
+        image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
         imagePullPolicy: Always
         resources:
           requests:
