@@ -17,7 +17,7 @@ version:
 
 stages:
   build:
-    image: golang:1.11.0-alpine3.8
+    image: golang:1.11.2-alpine3.8
     workDir: /go/src/github.com/estafette/${ESTAFETTE_LABEL_APP}
     env:
       CGO_ENABLED: 0
@@ -45,11 +45,11 @@ stages:
 
   slack-notify:
     image: extensions/slack-build-status:dev
-    webhook: estafette.secret(08UOJSF6Fvdz9u2X.lzsCArDpf97g7i2Vx-3UTyWsxCB81e05jthdY_AI3OffXBA-NurQePraQqzNf-9IhdoDvr1Akg0yom4S2kHjvWLhRC8Y7xgheK8MR6qPu2oi3QvlYbnNtTTOOjMi)
-    name: ${ESTAFETTE_LABEL_APP}
+    workspace: estafette
     channels:
     - '#build-status'
     when:
+      status == 'succeeded' ||
       status == 'failed'
 
 releases:
@@ -88,3 +88,12 @@ releases:
         - gcloud container clusters get-credentials ${GCLOUD_GKE_CLUSTER_NAME} --zone ${GCLOUD_GKE_ZONE}
         - kubectl delete job/estafette-ci-db-migrator -n estafette --ignore-not-found=true
         - cat kubernetes.yaml | envsubst | kubectl apply -f -
+
+      slack-notify:
+        image: extensions/slack-build-status:dev
+        workspace: estafette
+        channels:
+        - '#build-status'
+        when:
+          status == 'succeeded' ||
+          status == 'failed'
