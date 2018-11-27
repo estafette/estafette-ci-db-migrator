@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS computed_releases (
 	INDEX computed_releases_inserted_at_idx (inserted_at ASC),
 	INDEX computed_releases_release_id_idx (release_id ASC),
     UNIQUE INDEX computed_releases_order_by_idx (repo_source ASC, repo_owner ASC, repo_name ASC, release ASC, release_action ASC)
-)
+);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
