@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS pipeline_triggers (
 	updated_at TIMESTAMPTZ NULL DEFAULT now(),
 	INDEX pipeline_triggers_repo_source_repo_owner_repo_name_idx (repo_source ASC, repo_owner ASC, repo_owner ASC),
   INDEX pipeline_triggers_trigger_event_idx (trigger_event ASC),
-  UNIQUE INDEX pipeline_triggers_trigger_filter_idx (trigger_filter ASC)
+  INVERTED INDEX pipeline_triggers_trigger_filter_idx (trigger_filter ASC)
 );
 
 -- +goose Down
