@@ -30,5 +30,6 @@ And then edit the newly created script in the migrations folder.
 Before committing your changes run
 
 ```bash
-go test `go list ./... | grep -v /vendor/`
+go test
+go mod tidy
 ```
