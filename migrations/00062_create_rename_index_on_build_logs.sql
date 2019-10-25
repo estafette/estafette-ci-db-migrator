@@ -4,3 +4,4 @@ CREATE INDEX IF NOT EXISTS build_logs_rename_idx ON build_logs (repo_source, rep
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
+DROP INDEX IF EXISTS build_logs@build_logs_rename_idx;
