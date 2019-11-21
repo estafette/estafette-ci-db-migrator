@@ -43,7 +43,7 @@ stages:
         port: 8080
         timeoutSeconds: 120
       commands:
-      - /cockroach/cockroach start-single-node --insecure --http-addr cockroachdb:8080 --listen-addr cockroachdb:26257 --logtostderr --advertise-host cockroachdb
+      - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb --logtostderr
     name: migrate-schema-test
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
@@ -51,8 +51,8 @@ stages:
       COCKROACH_HOST: cockroachdb
       COCKROACH_INSECURE: true
       COCKROACH_PORT: 26257
-      COCKROACH_USER: estafette
-      COCKROACH_PASSWORD: hushhush
+      COCKROACH_USER: root
+      COCKROACH_PASSWORD: ""
 
   push-to-docker-hub:
     image: extensions/docker:dev
