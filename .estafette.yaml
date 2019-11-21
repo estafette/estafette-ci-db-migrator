@@ -36,11 +36,13 @@ stages:
     services:
     - name: cockroachdb
       image: cockroachdb/cockroach:v19.2.0
+      env:
+        COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
         path: /health?ready=1
         port: 8080
       commands:
-      - /cockroach/cockroach start-single-node --insecure --http-addr cockroachdb:8080 --listen-addr cockroachdb:26257
+      - /cockroach/cockroach start-single-node --insecure --http-addr cockroachdb:8080 --listen-addr cockroachdb:26257 --logtostderr --advertise-host cockroachdb
     name: migrate-schema-test
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
