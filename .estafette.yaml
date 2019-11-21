@@ -13,7 +13,7 @@ version:
 
 stages:
   build:
-    image: golang:1.13.0-alpine3.10
+    image: golang:1.13.4-alpine3.10
     env:
       CGO_ENABLED: 0
       GOOS: linux
@@ -40,7 +40,7 @@ stages:
         path: /health?ready=1
         port: 8080
       commands:
-      - /cockroach/cockroach start-single-node --insecure
+      - /cockroach/cockroach start-single-node --insecure --http-addr cockroachdb:8080 --listen-addr cockroachdb:26257
     name: migrate-schema-test
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
