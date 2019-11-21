@@ -1,3 +1,4 @@
+-- +goose NO TRANSACTION
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 ALTER TABLE computed_pipelines ADD triggers JSONB;
