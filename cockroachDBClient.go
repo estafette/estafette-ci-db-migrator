@@ -19,31 +19,33 @@ type DBClient interface {
 }
 
 type cockroachDBClientImpl struct {
-	databaseDriver          string
-	migrationsDir           string
-	cockroachDatabase       string
-	cockroachHost           string
-	cockroachInsecure       bool
-	cockroachCertificateDir string
-	cockroachPort           int
-	cockroachUser           string
-	cockroachPassword       string
-	databaseConnection      *sql.DB
+	databaseDriver            string
+	migrationsDir             string
+	cockroachConnectionString string
+	cockroachDatabase         string
+	cockroachHost             string
+	cockroachInsecure         bool
+	cockroachCertificateDir   string
+	cockroachPort             int
+	cockroachUser             string
+	cockroachPassword         string
+	databaseConnection        *sql.DB
 }
 
 // NewCockroachDBClient returns a new cockroach.DBClient
-func NewCockroachDBClient(cockroachDatabase, cockroachHost string, cockroachInsecure bool, cockroachCertificateDir string, cockroachPort int, cockroachUser, cockroachPassword string) (cockroachDBClient DBClient) {
+func NewCockroachDBClient(cockroachConnectionString, cockroachDatabase, cockroachHost string, cockroachInsecure bool, cockroachCertificateDir string, cockroachPort int, cockroachUser, cockroachPassword string) (cockroachDBClient DBClient) {
 
 	cockroachDBClient = &cockroachDBClientImpl{
-		databaseDriver:          "postgres",
-		migrationsDir:           "/migrations",
-		cockroachDatabase:       cockroachDatabase,
-		cockroachHost:           cockroachHost,
-		cockroachInsecure:       cockroachInsecure,
-		cockroachCertificateDir: cockroachCertificateDir,
-		cockroachPort:           cockroachPort,
-		cockroachUser:           cockroachUser,
-		cockroachPassword:       cockroachPassword,
+		databaseDriver:            "postgres",
+		migrationsDir:             "/migrations",
+		cockroachConnectionString: cockroachConnectionString,
+		cockroachDatabase:         cockroachDatabase,
+		cockroachHost:             cockroachHost,
+		cockroachInsecure:         cockroachInsecure,
+		cockroachCertificateDir:   cockroachCertificateDir,
+		cockroachPort:             cockroachPort,
+		cockroachUser:             cockroachUser,
+		cockroachPassword:         cockroachPassword,
 	}
 
 	return
@@ -52,14 +54,18 @@ func NewCockroachDBClient(cockroachDatabase, cockroachHost string, cockroachInse
 // Connect sets up a connection with CockroachDB
 func (dbc *cockroachDBClientImpl) Connect() (err error) {
 
-	log.Debug().Msgf("Connecting to database %v on host %v...", dbc.cockroachDatabase, dbc.cockroachHost)
-
-	sslMode := ""
-	if dbc.cockroachInsecure {
-		sslMode = "?sslmode=disable"
+	dataSourceName := ""
+	if dbc.cockroachConnectionString != "" {
+		log.Debug().Msgf("Connecting to database with connection string %v...", dbc.cockroachConnectionString)
+		dataSourceName = dbc.cockroachConnectionString
+	} else {
+		log.Debug().Msgf("Connecting to database %v on host %v...", dbc.cockroachDatabase, dbc.cockroachHost)
+		sslMode := ""
+		if dbc.cockroachInsecure {
+			sslMode = "?sslmode=disable"
+		}
+		dataSourceName = fmt.Sprintf("postgresql://%v:%v@%v:%v/%v%v", dbc.cockroachUser, dbc.cockroachPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, sslMode)
 	}
-
-	dataSourceName := fmt.Sprintf("postgresql://%v:%v@%v:%v/%v%v", dbc.cockroachUser, dbc.cockroachPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, sslMode)
 
 	return dbc.ConnectWithDriverAndSource(dbc.databaseDriver, dataSourceName)
 }

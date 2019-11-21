@@ -47,12 +47,13 @@ stages:
     name: migrate-schema-test
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
-      COCKROACH_DATABASE: estafette-ci
-      COCKROACH_HOST: cockroachdb
-      COCKROACH_INSECURE: true
-      COCKROACH_PORT: 26257
-      COCKROACH_USER: root
-      COCKROACH_PASSWORD: ""
+      COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/estafette-ci?sslmode=disable
+      # COCKROACH_DATABASE: estafette-ci
+      # COCKROACH_HOST: cockroachdb
+      # COCKROACH_INSECURE: true
+      # COCKROACH_PORT: 26257
+      # COCKROACH_USER: root
+      # COCKROACH_PASSWORD: ""
 
   push-to-docker-hub:
     image: extensions/docker:dev
