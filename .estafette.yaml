@@ -47,14 +47,14 @@ stages:
     - name: postgres
       image: postgres:12.1-alpine
     parallelStages:
-    - name: migrate-schema-cockroachdb-test
-      image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
-      env:
-        COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
-    - name: migrate-schema-postgres-test
-      image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
-      env:
-        COCKROACH_CONNECTION_STRING: postgresql://root@postgres:5432/postgres?sslmode=disable
+      migrate-schema-cockroachdb-test:
+        image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+        env:
+          COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
+      migrate-schema-postgres-test:
+        image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+        env:
+          COCKROACH_CONNECTION_STRING: postgresql://root@postgres:5432/postgres?sslmode=disable
 
   push-to-docker-hub:
     image: extensions/docker:dev
