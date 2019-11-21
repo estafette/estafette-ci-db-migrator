@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS build_version_details;
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
 CREATE TABLE build_version_details (
-  id INT PRIMARY KEY DEFAULT unique_rowid(),
+  id SERIAL PRIMARY KEY,
   build_version VARCHAR(256),
   repo_source VARCHAR(256),
   repo_full_name VARCHAR(256),

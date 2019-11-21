@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS build_logs;
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
 CREATE TABLE build_logs (
-	id INT NOT NULL DEFAULT unique_rowid(),
+	id SERIAL NOT NULL,
 	repo_full_name STRING(256) NULL,
 	repo_branch STRING(256) NULL,
 	repo_revision STRING(256) NULL,

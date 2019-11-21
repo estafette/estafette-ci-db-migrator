@@ -1,7 +1,7 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS github_push_events (
-  id INT PRIMARY KEY DEFAULT unique_rowid(),
+  id SERIAL PRIMARY KEY,
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),
   repo_name VARCHAR(256),

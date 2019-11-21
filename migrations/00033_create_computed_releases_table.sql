@@ -1,7 +1,7 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS computed_releases (
-	id INT NOT NULL DEFAULT unique_rowid(),
+	id SERIAL NOT NULL,
     release_id INT,
 	repo_source STRING(256) NULL,
 	repo_owner STRING(256) NULL,
