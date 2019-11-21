@@ -32,6 +32,25 @@ stages:
     - /etc/ssl/certs/ca-certificates.crt
     - ./migrations
 
+  test:
+    services:
+      name: cockroachdb
+      image: cockroachdb/cockroach:v19.2.0
+      readiness:
+        path: /health?ready=1
+        port: 8080
+      commands:
+      - cockroach start-single-node --insecure
+    name: migrate-schema-test
+    image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+    env:
+      COCKROACH_DATABASE: estafette-ci
+      COCKROACH_HOST: cockroachdb
+      COCKROACH_INSECURE: true
+      COCKROACH_PORT: 26257
+      COCKROACH_USER: estafette
+      COCKROACH_PASSWORD: hushhush
+
   push-to-docker-hub:
     image: extensions/docker:dev
     action: push
