@@ -43,7 +43,7 @@ stages:
         port: 8080
         timeoutSeconds: 120
       commands:
-      - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb --logtostderr
+      - exec /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb --logtostderr
     - name: postgres
       image: postgres:12.1-alpine
     parallelStages:
