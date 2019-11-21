@@ -44,16 +44,17 @@ stages:
         timeoutSeconds: 120
       commands:
       - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb --logtostderr
-    name: migrate-schema-test
-    image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
-    env:
-      COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
-      # COCKROACH_DATABASE: estafette-ci
-      # COCKROACH_HOST: cockroachdb
-      # COCKROACH_INSECURE: true
-      # COCKROACH_PORT: 26257
-      # COCKROACH_USER: root
-      # COCKROACH_PASSWORD: ""
+    - name: postgres
+      image: postgres:12.1-alpine
+    parallelStages:
+    - name: migrate-schema-cockroachdb-test
+      image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+      env:
+        COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
+    - name: migrate-schema-postgres-test
+      image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+      env:
+        COCKROACH_CONNECTION_STRING: postgresql://root@postgres:5432/postgres?sslmode=disable
 
   push-to-docker-hub:
     image: extensions/docker:dev
