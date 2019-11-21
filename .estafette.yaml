@@ -34,7 +34,7 @@ stages:
 
   test:
     services:
-      name: cockroachdb
+    - name: cockroachdb
       image: cockroachdb/cockroach:v19.2.0
       readiness:
         path: /health?ready=1
