@@ -54,7 +54,7 @@ stages:
       migrate-schema-postgres-test:
         image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
         env:
-          COCKROACH_CONNECTION_STRING: postgresql://root@postgres:5432/postgres?sslmode=disable
+          COCKROACH_CONNECTION_STRING: postgresql://postgres@postgres:5432/postgres?sslmode=disable
 
   push-to-docker-hub:
     image: extensions/docker:dev
