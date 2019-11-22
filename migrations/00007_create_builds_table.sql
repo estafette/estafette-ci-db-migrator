@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS builds (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS builds_repo_source_repo_owner_repo_name_repo_revision_idx ON builds (repo_source, repo_owner, repo_name, repo_revision);
-CREATE INVERTED INDEX ON builds_labels (labels);
+CREATE INVERTED INDEX IF NOT EXISTS builds_labels ON builds (labels);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
