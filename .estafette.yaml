@@ -36,7 +36,7 @@ stages:
     services:
     - name: cockroachdb
       image: cockroachdb/cockroach:v19.2.0
-      shell: /bin/bash
+      # shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
@@ -44,7 +44,9 @@ stages:
         port: 8080
         timeoutSeconds: 120
       commands:
-      - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb --logtostderr
+      - apt-get update && apt-get install -y procps
+      - ps
+      - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb
     - name: postgres
       image: postgres:12.1-alpine
     parallelStages:
