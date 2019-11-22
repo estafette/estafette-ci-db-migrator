@@ -36,7 +36,6 @@ stages:
     services:
     - name: cockroachdb
       image: cockroachdb/cockroach:v19.2.0
-      # shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
