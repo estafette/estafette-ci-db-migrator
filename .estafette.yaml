@@ -44,8 +44,6 @@ stages:
         port: 8080
         timeoutSeconds: 120
       commands:
-      - apt-get update && apt-get install -y procps
-      - ps
       - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb
     - name: postgres
       image: postgres:12.1-alpine
