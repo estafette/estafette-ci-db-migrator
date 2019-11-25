@@ -45,19 +45,11 @@ stages:
         timeoutSeconds: 120
       commands:
       - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb
-    - name: postgres
-      image: postgres:12.1-alpine
-    parallelStages:
-      migrate-schema-cockroachdb-test:
-        image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
-        env:
-          COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
-          ESTAFETTE_LOG_FORMAT: console
-      # migrate-schema-postgres-test:
-      #   image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
-      #   env:
-      #     COCKROACH_CONNECTION_STRING: postgresql://postgres@postgres:5432/postgres?sslmode=disable
-      #     ESTAFETTE_LOG_FORMAT: console
+
+    image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+    env:
+      COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
+      ESTAFETTE_LOG_FORMAT: console
 
   push-to-docker-hub:
     image: extensions/docker:dev
