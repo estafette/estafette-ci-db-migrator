@@ -1,8 +1,8 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS computed_pipelines (
-  id INT PRIMARY KEY DEFAULT unique_rowid(),
-  pipeline_id INT,
+	id SERIAL PRIMARY KEY,
+	pipeline_id INT,
 	repo_source STRING(256) NULL,
 	repo_owner STRING(256) NULL,
 	repo_name STRING(256) NULL,

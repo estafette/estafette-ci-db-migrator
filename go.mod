@@ -10,7 +10,7 @@ require (
 	github.com/estafette/estafette-foundation v0.0.32
 	github.com/lib/pq v0.0.0-20180523175426-90697d60dd84
 	github.com/mattn/go-isatty v0.0.6 // indirect
-	github.com/pressly/goose v2.3.0+incompatible
+	github.com/pressly/goose v2.6.0+incompatible
 	github.com/rs/zerolog v1.15.0
 	github.com/sergi/go-diff v1.0.0 // indirect
 )

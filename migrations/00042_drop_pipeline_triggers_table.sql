@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS pipeline_triggers;
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
 CREATE TABLE computed_pipelines (
-  id INT PRIMARY KEY DEFAULT unique_rowid(),
+	id SERIAL PRIMARY KEY,
 	pipeline_id INT NULL,
 	repo_source STRING(256) NULL,
 	repo_owner STRING(256) NULL,

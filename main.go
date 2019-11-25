@@ -20,13 +20,14 @@ var (
 
 var (
 	// flags
-	cockroachDatabase       = kingpin.Flag("cockroach-database", "CockroachDB database.").Envar("COCKROACH_DATABASE").String()
-	cockroachHost           = kingpin.Flag("cockroach-host", "CockroachDB host.").Envar("COCKROACH_HOST").String()
-	cockroachInsecure       = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Envar("COCKROACH_INSECURE").Bool()
-	cockroachCertificateDir = kingpin.Flag("cockroach-certs-dir", "CockroachDB certificate directory.").Envar("COCKROACH_CERTS_DIR").String()
-	cockroachPort           = kingpin.Flag("cockroach-port", "CockroachDB port.").Envar("COCKROACH_PORT").Int()
-	cockroachUser           = kingpin.Flag("cockroach-user", "CockroachDB user.").Envar("COCKROACH_USER").String()
-	cockroachPassword       = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
+	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Envar("COCKROACH_DATABASE").String()
+	cockroachHost             = kingpin.Flag("cockroach-host", "CockroachDB host.").Envar("COCKROACH_HOST").String()
+	cockroachInsecure         = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Envar("COCKROACH_INSECURE").Bool()
+	cockroachCertificateDir   = kingpin.Flag("cockroach-certs-dir", "CockroachDB certificate directory.").Envar("COCKROACH_CERTS_DIR").String()
+	cockroachPort             = kingpin.Flag("cockroach-port", "CockroachDB port.").Envar("COCKROACH_PORT").Int()
+	cockroachUser             = kingpin.Flag("cockroach-user", "CockroachDB user.").Envar("COCKROACH_USER").String()
+	cockroachPassword         = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
+	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
 )
 
 func main() {
@@ -38,14 +39,14 @@ func main() {
 	foundation.InitLoggingFromEnv(appgroup, app, version, branch, revision, buildDate)
 
 	// set up database and update schema
-	cockroachDBClient := NewCockroachDBClient(*cockroachDatabase, *cockroachHost, *cockroachInsecure, *cockroachCertificateDir, *cockroachPort, *cockroachUser, *cockroachPassword)
+	cockroachDBClient := NewCockroachDBClient(*cockroachConnectionString, *cockroachDatabase, *cockroachHost, *cockroachInsecure, *cockroachCertificateDir, *cockroachPort, *cockroachUser, *cockroachPassword)
 	err := cockroachDBClient.Connect()
 	if err != nil {
 		log.Warn().Err(err).Msg("Failed connecting to database")
 	}
 	err = cockroachDBClient.MigrateSchema()
 	if err != nil {
-		log.Warn().Err(err).Msg("Failed migrating database schema")
+		log.Fatal().Err(err).Msg("Failed migrating database schema")
 	}
 
 	log.Info().Msg("Successfully migrated database schema")
