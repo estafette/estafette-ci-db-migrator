@@ -32,7 +32,7 @@ stages:
     - /etc/ssl/certs/ca-certificates.crt
     - ./migrations
 
-  test:
+  test-with-single-stage-services:
     services:
     - name: cockroachdb
       image: cockroachdb/cockroach:v19.2.0
@@ -46,6 +46,26 @@ stages:
       commands:
       - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb
 
+    image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
+    env:
+      COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
+      ESTAFETTE_LOG_FORMAT: console
+
+  test-with-multi-stage-services-setup:
+    services:
+    - name: cockroachdb
+      image: cockroachdb/cockroach:v19.2.0
+      shell: /bin/bash
+      env:
+        COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
+      readiness:
+        path: /health?ready=1
+        port: 8080
+        timeoutSeconds: 120
+      commands:
+      - /cockroach/cockroach start-single-node --insecure --advertise-addr cockroachdb
+
+  test-with-multi-stage-services-test:
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
       COCKROACH_CONNECTION_STRING: postgresql://root@cockroachdb:26257/defaultdb?sslmode=disable
