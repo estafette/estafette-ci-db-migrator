@@ -35,7 +35,7 @@ stages:
   test-with-single-stage-services:
     services:
     - name: cockroachdb
-      image: cockroachdb/cockroach:v19.2.0
+      image: cockroachdb/cockroach:v19.2.1
       shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
@@ -54,7 +54,7 @@ stages:
   test-with-multi-stage-services-setup:
     services:
     - name: cockroachdb
-      image: cockroachdb/cockroach:v19.2.0
+      image: cockroachdb/cockroach:v19.2.1
       shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
