@@ -13,7 +13,7 @@ version:
 
 stages:
   build:
-    image: golang:1.13.5-alpine3.10
+    image: golang:1.13.6-alpine3.11
     env:
       CGO_ENABLED: 0
       GOOS: linux
@@ -48,7 +48,7 @@ stages:
   test-migration:
     services:
     - name: cockroachdb
-      image: cockroachdb/cockroach:v19.2.1
+      image: cockroachdb/cockroach:v19.2.2
       shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
