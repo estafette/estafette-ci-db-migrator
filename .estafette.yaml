@@ -13,7 +13,7 @@ version:
 
 stages:
   build:
-    image: golang:1.14.0-alpine3.11
+    image: golang:1.14.2-alpine3.11
     env:
       CGO_ENABLED: 0
       GOOS: linux
@@ -48,7 +48,7 @@ stages:
   test-migration:
     services:
     - name: cockroachdb
-      image: cockroachdb/cockroach:v19.2.2
+      image: cockroachdb/cockroach:v19.2.6
       shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
@@ -80,7 +80,7 @@ stages:
       status == 'failed'
 
 releases:
-  tooling:
+  tooling-estafette:
     stages:
       git-clone:
         image: extensions/git-clone:dev
@@ -88,12 +88,12 @@ releases:
       run-job:
         image: extensions/gke:dev
         kind: job
-        namespace: estafette
+        namespace: estafette-ci
         container:
           repository: estafette
           env:
             COCKROACH_DATABASE: estafette.secret(FMiqFetD_wlJM9mB.2_kprGMxMtllfDzFI-95itWfvAeb70ibG-6-CDs4P6A=)
-            COCKROACH_HOST: estafette.secret(NBbU-NviD2kCo6t7.BNARNwmU-Lfa4erBVxjeRbz9c4xh9bos4UyO5eMvdQgK1JofvD9GCLDkUJEMdJbbQxbOjUnzw70fopt_mus=)
+            COCKROACH_HOST: estafette.secret(T29_Bgv4SeYket47.nAAZpYW7tiHFlv4oQJbZSUzvXS6NwVcNY3ypNFXeOFwBHRhHT6zCL7FN2aSVBdMO5GhMXvEORrXtszRR7an_UQ4=.mAYOpoK2-SHCn7NgQ5faQ0D4By7R0EUfZ264JQzYfBEbRh8LAa3eO7dJ3-WLZP7TwCcJ_id6EGPQ1X1MzA==)
             COCKROACH_INSECURE: estafette.secret(zH4TA8KlflUEIhXA.pEC3hEnqCTPOGC8C0Z2wKHk139w=)
             COCKROACH_CERTS_DIR: /cockroach-certs
             COCKROACH_PORT: 26257
