@@ -2,11 +2,11 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
-  user JSONB,
+  user JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
+  INVERTED INDEX users_user (user)
 );
-CREATE INVERTED INDEX IF NOT EXISTS users_user ON users (user);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
