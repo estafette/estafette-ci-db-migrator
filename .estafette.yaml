@@ -49,7 +49,7 @@ stages:
   test-migration:
     services:
     - name: cockroachdb
-      image: cockroachdb/cockroach:v20.1.0
+      image: cockroachdb/cockroach:v20.1.1
       shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
