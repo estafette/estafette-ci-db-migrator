@@ -116,7 +116,7 @@ releases:
           mountpath: /cockroach-certs
           volume:
             secret:
-              secretName: estafette.client.migrator
+              secretName: estafette-ci.client.migrator
               defaultMode: 0400
 
       slack-notify:
