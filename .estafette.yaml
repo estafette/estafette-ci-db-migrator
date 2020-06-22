@@ -111,6 +111,13 @@ releases:
           memory:
             request: 512Mi
             limit: 512Mi
+        volumemounts:
+        - name: client-certs
+          mountpath: /cockroach-certs
+          volume:
+            secret:
+              secretName: estafette.client.migrator
+              defaultMode: 0400
 
       slack-notify:
         image: extensions/slack-build-status:dev

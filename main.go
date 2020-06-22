@@ -28,6 +28,8 @@ var (
 	cockroachUser             = kingpin.Flag("cockroach-user", "CockroachDB user.").Envar("COCKROACH_USER").String()
 	cockroachPassword         = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
 	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
+	sslMode                   = kingpin.Flag("ssl-mode", "SSL Mode used to connect to cockroachdb.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
+	certificateAuthorityPath  = kingpin.Flag("ca-path", "Path to certificate authority (CA) public certificate.").Default("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt").OverrideDefaultFromEnvar("CA_PATH").String()
 )
 
 func main() {
@@ -39,7 +41,7 @@ func main() {
 	foundation.InitLoggingFromEnv(appgroup, app, version, branch, revision, buildDate)
 
 	// set up database and update schema
-	cockroachDBClient := NewCockroachDBClient(*cockroachConnectionString, *cockroachDatabase, *cockroachHost, *cockroachInsecure, *cockroachCertificateDir, *cockroachPort, *cockroachUser, *cockroachPassword)
+	cockroachDBClient := NewCockroachDBClient(*cockroachConnectionString, *cockroachDatabase, *cockroachHost, *cockroachInsecure, *sslMode, *cockroachCertificateDir, *certificateAuthorityPath, *cockroachPort, *cockroachUser, *cockroachPassword)
 	err := cockroachDBClient.Connect()
 	if err != nil {
 		log.Warn().Err(err).Msg("Failed connecting to database")

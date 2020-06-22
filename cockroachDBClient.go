@@ -25,7 +25,9 @@ type cockroachDBClientImpl struct {
 	cockroachDatabase         string
 	cockroachHost             string
 	cockroachInsecure         bool
+	sslMode                   string
 	cockroachCertificateDir   string
+	certificateAuthorityPath  string
 	cockroachPort             int
 	cockroachUser             string
 	cockroachPassword         string
@@ -33,7 +35,7 @@ type cockroachDBClientImpl struct {
 }
 
 // NewCockroachDBClient returns a new cockroach.DBClient
-func NewCockroachDBClient(cockroachConnectionString, cockroachDatabase, cockroachHost string, cockroachInsecure bool, cockroachCertificateDir string, cockroachPort int, cockroachUser, cockroachPassword string) (cockroachDBClient DBClient) {
+func NewCockroachDBClient(cockroachConnectionString, cockroachDatabase, cockroachHost string, cockroachInsecure bool, sslMode, cockroachCertificateDir, certificateAuthorityPath string, cockroachPort int, cockroachUser, cockroachPassword string) (cockroachDBClient DBClient) {
 
 	cockroachDBClient = &cockroachDBClientImpl{
 		databaseDriver:            "postgres",
@@ -42,7 +44,9 @@ func NewCockroachDBClient(cockroachConnectionString, cockroachDatabase, cockroac
 		cockroachDatabase:         cockroachDatabase,
 		cockroachHost:             cockroachHost,
 		cockroachInsecure:         cockroachInsecure,
+		sslMode:                   sslMode,
 		cockroachCertificateDir:   cockroachCertificateDir,
+		certificateAuthorityPath:  certificateAuthorityPath,
 		cockroachPort:             cockroachPort,
 		cockroachUser:             cockroachUser,
 		cockroachPassword:         cockroachPassword,
@@ -60,11 +64,11 @@ func (dbc *cockroachDBClientImpl) Connect() (err error) {
 		dataSourceName = dbc.cockroachConnectionString
 	} else {
 		log.Debug().Msgf("Connecting to database %v on host %v...", dbc.cockroachDatabase, dbc.cockroachHost)
-		sslMode := ""
 		if dbc.cockroachInsecure {
-			sslMode = "?sslmode=disable"
+			dataSourceName = fmt.Sprintf("postgresql://%v:%v@%v:%v/%v?sslmode=disable", dbc.cockroachUser, dbc.cockroachPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase)
+		} else {
+			dataSourceName = fmt.Sprintf("postgresql://%v@%v:%v/%v?sslmode=%v&sslrootcert=%v&sslcert=%v/cert&sslkey=%v/key", dbc.cockroachUser, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, dbc.sslMode, dbc.certificateAuthorityPath, dbc.cockroachCertificateDir, dbc.cockroachCertificateDir)
 		}
-		dataSourceName = fmt.Sprintf("postgresql://%v:%v@%v:%v/%v%v", dbc.cockroachUser, dbc.cockroachPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, sslMode)
 	}
 
 	return dbc.ConnectWithDriverAndSource(dbc.databaseDriver, dataSourceName)
