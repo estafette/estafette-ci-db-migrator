@@ -98,7 +98,7 @@ releases:
           repository: estafette
           env:
             COCKROACH_DATABASE: estafette.secret(dvU0YFtbQeLg03F_.eQp-XyPGfDhcN7ErIZaf83ZXsacxH7WPQC_GnQGz5Iw=.exB-VjDBJi9WBf0nDYOO_Asnu3YLMfCzrEgAGOjgj73w-NdktL7g6klqIW--t0KO6MzjReO-iKeFL8EvZQ==)
-            COCKROACH_HOST: estafette.secret(nb_AkVEGwiR1jaSz.0FqEaN0ngeF9_6eVEF7C2KJiDf7T0IVltMkrK66kYzLNDrFCZMxJ4GV73Vh6kiFSLFhCi0RL8WZsMc4f7uyyKWo=.1FyTa9oqzuF69urdE1_B0q51V_6PwZd3sNs6OveiJ3_XVbYOKs1V9GN_2xlkr7LhuZpnY8vLCmYrT_5dzw==)
+            COCKROACH_HOST: estafette.secret(1WigkSphao5kDfBH._XrGyFhuHngJEB4lICmKAu5E4DywVnRxAntbxZ1I-Y63smo68p67iA4zvOtL5y28exGKV-0zaIOuui3EMTepTQ5_VND05PO-HLI=.-XzRy19jUXgOGVNtJTSKSeNV-DSyQ3JnD3Rdn4xeoIy4-nosut6xhlIhvucXX4zpmfMMir_p_rc7LcEZyQ==)
             COCKROACH_CERTS_DIR: /cockroach-certs
             COCKROACH_PORT: 26257
             COCKROACH_USER: estafette.secret(CJ9f-SH3okHZ_vR8.EtN7YKlj07HMQH_6iqNdk454Rr0UyRpo.GNNoer11kqAOSAnHbc-XVs0cfUBMGKi7IMoKsxuht6GjbE-215zO8cATQA-f8C91Ruvayh9bb620EOycQw==)
