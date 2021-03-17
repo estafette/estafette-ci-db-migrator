@@ -89,7 +89,7 @@ stages:
     - ${ESTAFETTE_BUILD_VERSION_MAJOR}
     - latest
 
-  test-helm-chart:
+  start-kind-and-install-db:
     services:
     - name: kubernetes
       image: bsycorp/kind:latest-1.19
@@ -99,6 +99,25 @@ stages:
         timeoutSeconds: 120
     image: extensions/helm:dev
     action: test
+    repoUrl: https://charts.cockroachdb.com/
+    chart: cockroachdb
+    version: 5.0.6
+    namespace: estafette-ci
+    release: estafette-ci-db
+    values: |-
+      conf:
+        single-node: true
+      statefulset:
+        replicas: 1
+      storage:
+        persistentVolume:
+          enabled: false
+          size: 1Gi
+
+  test-helm-chart:
+    image: extensions/helm:dev
+    action: test
+    namespace: estafette-ci
     values: |-
 
   clone-charts-repo:
