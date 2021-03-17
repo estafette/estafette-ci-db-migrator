@@ -20,12 +20,12 @@ var (
 
 var (
 	// flags
-	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Envar("COCKROACH_DATABASE").String()
-	cockroachHost             = kingpin.Flag("cockroach-host", "CockroachDB host.").Envar("COCKROACH_HOST").String()
-	cockroachInsecure         = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Envar("COCKROACH_INSECURE").Bool()
-	cockroachCertificateDir   = kingpin.Flag("cockroach-certs-dir", "CockroachDB certificate directory.").Envar("COCKROACH_CERTS_DIR").String()
-	cockroachPort             = kingpin.Flag("cockroach-port", "CockroachDB port.").Envar("COCKROACH_PORT").Int()
-	cockroachUser             = kingpin.Flag("cockroach-user", "CockroachDB user.").Envar("COCKROACH_USER").String()
+	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Default("estafette_ci_api").OverrideDefaultFromEnvar("COCKROACH_DATABASE").String()
+	cockroachHost             = kingpin.Flag("cockroach-host", "CockroachDB host.").Default("estafette-ci-db-public.estafette-ci.svc.cluster.local").OverrideDefaultFromEnvar("COCKROACH_HOST").String()
+	cockroachInsecure         = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Default("false").OverrideDefaultFromEnvar("COCKROACH_INSECURE").Bool()
+	cockroachCertificateDir   = kingpin.Flag("cockroach-certs-dir", "CockroachDB certificate directory.").Default("/cockroach-certs").OverrideDefaultFromEnvar("COCKROACH_CERTS_DIR").String()
+	cockroachPort             = kingpin.Flag("cockroach-port", "CockroachDB port.").Default("26257").OverrideDefaultFromEnvar("COCKROACH_PORT").Int()
+	cockroachUser             = kingpin.Flag("cockroach-user", "CockroachDB user.").Default("api").OverrideDefaultFromEnvar("COCKROACH_USER").String()
 	cockroachPassword         = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
 	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
 	sslMode                   = kingpin.Flag("ssl-mode", "SSL Mode used to connect to cockroachdb.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
@@ -33,7 +33,6 @@ var (
 )
 
 func main() {
-
 	// parse command line parameters
 	kingpin.Parse()
 
