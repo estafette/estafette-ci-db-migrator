@@ -10,9 +10,6 @@ metadata:
     # This will delete job after succeeded
     helm.sh/hook-delete-policy: hook-succeeded,before-hook-creation
 spec:
-  selector:
-    matchLabels:
-      {{- include "estafette-ci-db-migrator.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.job.podAnnotations }}
@@ -22,6 +19,7 @@ spec:
       labels:
         {{- include "estafette-ci-db-migrator.selectorLabels" . | nindent 8 }}
     spec:
+      restartPolicy: OnFailure
       {{- if or .Values.image.credentials .Values.imagePullSecrets }}
       imagePullSecrets:
       {{- if .Values.image.credentials }}
