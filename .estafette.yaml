@@ -103,7 +103,6 @@ stages:
     repoUrl: https://charts.cockroachdb.com/
     chart: cockroachdb
     version: 5.0.6
-    namespace: estafette-ci
     release: estafette-ci-db
     values: |-
       conf:
@@ -118,12 +117,11 @@ stages:
   test-helm-chart:
     image: extensions/helm:dev
     action: test
-    namespace: estafette-ci
     values: |-
       job:
         env:
         - name: COCKROACH_CONNECTION_STRING
-          value: postgresql://root@estafette-ci-db-public.estafette-ci.svc.cluster.local:26257/defaultdb?sslmode=disable
+          value: postgresql://root@cockroachdb-public:26257/defaultdb?sslmode=disable
 
   clone-charts-repo:
     image: extensions/git-clone:dev
