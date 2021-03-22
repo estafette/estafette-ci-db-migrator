@@ -20,7 +20,7 @@ var (
 
 var (
 	// flags
-	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Default("estafette_ci_api").OverrideDefaultFromEnvar("COCKROACH_DATABASE").String()
+	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Default("defaultdb").OverrideDefaultFromEnvar("COCKROACH_DATABASE").String()
 	cockroachHost             = kingpin.Flag("cockroach-host", "CockroachDB host.").Default("estafette-ci-db-public").OverrideDefaultFromEnvar("COCKROACH_HOST").String()
 	cockroachInsecure         = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Default("false").OverrideDefaultFromEnvar("COCKROACH_INSECURE").Bool()
 	cockroachCertificateDir   = kingpin.Flag("cockroach-certs-dir", "CockroachDB certificate directory.").Default("/cockroach-certs").OverrideDefaultFromEnvar("COCKROACH_CERTS_DIR").String()

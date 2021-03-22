@@ -119,10 +119,6 @@ stages:
     image: extensions/helm:dev
     action: test
     values: |-
-      job:
-        env:
-        - name: COCKROACH_CONNECTION_STRING
-          value: postgresql://root@cockroachdb-public:26257/defaultdb?sslmode=disable
 
   clone-charts-repo:
     image: extensions/git-clone:dev

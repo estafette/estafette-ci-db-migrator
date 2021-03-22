@@ -64,10 +64,16 @@ func (dbc *cockroachDBClientImpl) Connect() (err error) {
 		dataSourceName = dbc.cockroachConnectionString
 	} else {
 		log.Debug().Msgf("Connecting to database %v on host %v...", dbc.cockroachDatabase, dbc.cockroachHost)
+
+		userAndPassword := dbc.cockroachUser
+		if dbc.cockroachPassword != "" {
+			userAndPassword += ":" + dbc.cockroachPassword
+		}
+
 		if dbc.cockroachInsecure {
-			dataSourceName = fmt.Sprintf("postgresql://%v:%v@%v:%v/%v?sslmode=disable", dbc.cockroachUser, dbc.cockroachPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase)
+			dataSourceName = fmt.Sprintf("postgresql://%v@%v:%v/%v?sslmode=disable", userAndPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase)
 		} else {
-			dataSourceName = fmt.Sprintf("postgresql://%v@%v:%v/%v?sslmode=%v&sslrootcert=%v&sslcert=%v/cert&sslkey=%v/key", dbc.cockroachUser, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, dbc.sslMode, dbc.certificateAuthorityPath, dbc.cockroachCertificateDir, dbc.cockroachCertificateDir)
+			dataSourceName = fmt.Sprintf("postgresql://%v@%v:%v/%v?sslmode=%v&sslrootcert=%v&sslcert=%v/cert&sslkey=%v/key", userAndPassword, dbc.cockroachHost, dbc.cockroachPort, dbc.cockroachDatabase, dbc.sslMode, dbc.certificateAuthorityPath, dbc.cockroachCertificateDir, dbc.cockroachCertificateDir)
 		}
 	}
 
