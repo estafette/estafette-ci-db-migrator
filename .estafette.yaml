@@ -121,6 +121,8 @@ stages:
     values: |-
       job:
         env:
+        - name: COCKROACH_INSECURE
+          value: 'true'
         - name: COCKROACH_HOST
           value: cockroachdb-public
 
