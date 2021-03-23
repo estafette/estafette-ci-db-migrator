@@ -76,6 +76,7 @@ stages:
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
+      COCKROACH_INSECURE: true
       ESTAFETTE_LOG_FORMAT: console
 
   push-to-docker-hub:
