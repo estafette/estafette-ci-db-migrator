@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS bots (
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),
   repo_name VARCHAR(256),
-  bot STRING(256) NULL,
+  bot VARCHAR(256),
   bot_status VARCHAR(256),
   triggered_by_event JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
