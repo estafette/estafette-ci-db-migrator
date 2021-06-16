@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS build_logs_v2 (
   steps JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   UNIQUE INDEX build_logs_v2_repo_source_repo_owner_repo_name_repo_revision_idx (repo_source, repo_owner, repo_name, repo_revision),
-  INVERTED INDEX build_logs_v2_steps (steps)
+  INDEX build_logs_v2_steps USING GIN (steps)
 );
 
 -- +goose Down

@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS bots (
   organizations JSONB,
   groups JSONB,
   INDEX bots_get_pipeline_bots_idx (repo_source ASC, repo_owner ASC, repo_name ASC, inserted_at DESC),
-  INVERTED INDEX bots_organizations (organizations),
-  INVERTED INDEX bots_groups (groups)
+  INDEX bots_organizations USING GIN (organizations),
+  INDEX bots_groups USING GIN (groups)
 );
 
 -- +goose Down

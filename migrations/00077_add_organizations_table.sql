@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS organizations (
   organization_data JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  INVERTED INDEX organizations_organization_data (organization_data)
+  INDEX organizations_organization_data USING GIN (organization_data)
 );
 
 -- +goose Down

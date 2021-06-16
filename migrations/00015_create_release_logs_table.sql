@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS release_logs (
   steps JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   UNIQUE INDEX release_logs_repo_source_repo_owner_repo_name_release_id_idx (repo_source, repo_owner, repo_name, release_id),
-  INVERTED INDEX release_logs_steps (steps)
+  INDEX release_logs_steps USING GIN (steps)
 );
 
 -- +goose Down

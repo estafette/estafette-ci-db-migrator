@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS catalog_entities (
   INDEX catalog_entities_parent (parent_key, parent_value),
   INDEX catalog_entities_entity (entity_key, entity_value),
   INDEX catalog_entities_linked_pipeline (linked_pipeline),
-  INVERTED INDEX catalog_entities_labels (labels),
-  INVERTED INDEX catalog_entities_entity_metadata (entity_metadata)
+  INDEX catalog_entities_labels USING GIN (labels),
+  INDEX catalog_entities_entity_metadata USING GIN (entity_metadata)
 );
 
 -- +goose Down

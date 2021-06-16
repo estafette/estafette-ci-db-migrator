@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS computed_pipelines (
 	commits JSONB NULL,
 	duration INTERVAL NULL DEFAULT '0s':::INTERVAL,
 	release_targets JSONB NULL,
-	INVERTED INDEX computed_pipelines_labels_idx (labels),
+	INDEX computed_pipelines_labels_idx USING GIN (labels),
 	INDEX computed_pipelines_build_status_idx (build_status ASC),
 	INDEX computed_pipelines_inserted_at_idx (inserted_at ASC),
 	INDEX computed_pipelines_pipeline_id_idx (pipeline_id ASC),

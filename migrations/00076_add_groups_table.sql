@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS groups (
   group_data JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  INVERTED INDEX groups_group_data (group_data)
+  INDEX groups_group_data USING GIN (group_data)
 );
 
 -- +goose Down

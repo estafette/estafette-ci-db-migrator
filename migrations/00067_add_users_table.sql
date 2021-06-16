@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users (
   user_data JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  INVERTED INDEX users_user_data (user_data)
+  INDEX users_user_data USING GIN (user_data)
 );
 
 -- +goose Down

@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS notifications (
   organizations JSONB,
   groups JSONB,
   INDEX notifications_get_link_notifications_idx (link_type ASC, link_id ASC, inserted_at DESC),
-  INVERTED INDEX notifications_link_detail (link_detail),
-  INVERTED INDEX notifications_organizations (organizations),
-  INVERTED INDEX notifications_groups (groups)
+  INDEX notifications_link_detail USING GIN (link_detail),
+  INDEX notifications_organizations USING GIN (organizations),
+  INDEX notifications_groups USING GIN (groups)
 );
 
 -- +goose Down

@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS triggers (
   event_name VARCHAR(256),
   triggers JSONB,
   INDEX triggers_trigger_type_identifier_idx (trigger_type, identifier, event_name),
-  INVERTED INDEX triggers_triggers (triggers)
+  INDEX triggers_triggers USING GIN (triggers)
 );
 
 -- +goose Down
