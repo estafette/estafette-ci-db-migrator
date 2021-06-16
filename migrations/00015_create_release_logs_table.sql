@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS release_logs (
   release_id INT,
   steps JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  UNIQUE INDEX release_logs_repo_source_repo_owner_repo_name_release_id_idx (repo_source, repo_owner, repo_name, release_id),
-  INDEX release_logs_steps USING GIN (steps)
+  UNIQUE INDEX release_logs_repo_source_repo_owner_repo_name_release_id_idx (repo_source, repo_owner, repo_name, release_id)
 );
+CREATE INDEX IF NOT EXISTS release_logs_steps ON release_logs USING GIN (steps);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

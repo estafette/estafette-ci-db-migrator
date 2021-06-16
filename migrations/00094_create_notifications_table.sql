@@ -10,11 +10,11 @@ CREATE TABLE IF NOT EXISTS notifications (
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   organizations JSONB,
   groups JSONB,
-  INDEX notifications_get_link_notifications_idx (link_type ASC, link_id ASC, inserted_at DESC),
-  INDEX notifications_link_detail USING GIN (link_detail),
-  INDEX notifications_organizations USING GIN (organizations),
-  INDEX notifications_groups USING GIN (groups)
+  INDEX notifications_get_link_notifications_idx (link_type ASC, link_id ASC, inserted_at DESC)
 );
+CREATE INDEX IF NOT EXISTS notifications_link_detail ON notifications USING GIN (link_detail);
+CREATE INDEX IF NOT EXISTS notifications_organizations ON notifications USING GIN (organizations);
+CREATE INDEX IF NOT EXISTS notifications_groups ON notifications USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

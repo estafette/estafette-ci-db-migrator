@@ -11,6 +11,6 @@ CREATE TABLE triggers (
 	event_name VARCHAR(256) NULL,
 	triggers JSONB NULL,
 	CONSTRAINT "primary" PRIMARY KEY (id ASC),
-	INDEX triggers_triggers USING GIN (triggers),
 	UNIQUE INDEX triggers_trigger_type_identifier_event_name_idx (trigger_type ASC, identifier ASC, event_name ASC)
-)
+);
+CREATE INDEX IF NOT EXISTS triggers_triggers ON triggers USING GIN (triggers);

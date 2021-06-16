@@ -19,10 +19,10 @@ CREATE TABLE IF NOT EXISTS bots (
   memory_max_usage FLOAT8,
   organizations JSONB,
   groups JSONB,
-  INDEX bots_get_pipeline_bots_idx (repo_source ASC, repo_owner ASC, repo_name ASC, inserted_at DESC),
-  INDEX bots_organizations USING GIN (organizations),
-  INDEX bots_groups USING GIN (groups)
+  INDEX bots_get_pipeline_bots_idx (repo_source ASC, repo_owner ASC, repo_name ASC, inserted_at DESC)
 );
+CREATE INDEX IF NOT EXISTS bots_organizations ON bots USING GIN (organizations);
+CREATE INDEX IF NOT EXISTS bots_groups ON bots USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

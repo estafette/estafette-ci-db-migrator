@@ -4,27 +4,17 @@ DROP TABLE IF EXISTS pipeline_triggers;
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-CREATE TABLE computed_pipelines (
-	id SERIAL PRIMARY KEY,
-	pipeline_id INT NULL,
-	repo_source STRING(256) NULL,
-	repo_owner STRING(256) NULL,
-	repo_name STRING(256) NULL,
-	repo_branch STRING(256) NULL,
-	repo_revision STRING(256) NULL,
-	build_version STRING(256) NULL,
-	build_status STRING(256) NULL,
-	labels JSONB NULL,
-	manifest STRING NULL,
-	inserted_at TIMESTAMPTZ NULL DEFAULT now():::TIMESTAMPTZ,
-	updated_at TIMESTAMPTZ NULL DEFAULT now():::TIMESTAMPTZ,
-	commits JSONB NULL,
-	duration INTERVAL NULL DEFAULT '0s':::INTERVAL,
-	release_targets JSONB NULL,
-	first_inserted_at TIMESTAMPTZ NULL DEFAULT now():::TIMESTAMPTZ,
-	INDEX computed_pipelines_labels_idx USING GIN (labels),
-	INDEX computed_pipelines_build_status_idx (build_status ASC),
-	INDEX computed_pipelines_inserted_at_idx (inserted_at ASC),
-	INDEX computed_pipelines_pipeline_id_idx (pipeline_id ASC),
-	UNIQUE INDEX computed_pipelines_order_by_idx (repo_source ASC, repo_owner ASC, repo_name ASC)
-)
+CREATE TABLE IF NOT EXISTS pipeline_triggers (
+  id SERIAL PRIMARY KEY,
+  repo_source VARCHAR(256),
+  repo_owner VARCHAR(256),
+  repo_name VARCHAR(256),
+	trigger_event STRING(256) NULL,
+  trigger_filter JSONB,
+  trigger_run JSONB,
+	inserted_at TIMESTAMPTZ NULL DEFAULT now(),
+	updated_at TIMESTAMPTZ NULL DEFAULT now(),
+	INDEX pipeline_triggers_repo_source_repo_owner_repo_name_idx (repo_source ASC, repo_owner ASC, repo_name ASC),
+  INDEX pipeline_triggers_trigger_event_idx (trigger_event ASC)
+);
+CREATE INDEX IF NOT EXISTS pipeline_triggers_trigger_filter_idx ON pipeline_triggers USING GIN (trigger_filter);

@@ -9,9 +9,9 @@ CREATE TABLE IF NOT EXISTS build_logs_v2 (
   repo_revision VARCHAR(256),
   steps JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  UNIQUE INDEX build_logs_v2_repo_source_repo_owner_repo_name_repo_revision_idx (repo_source, repo_owner, repo_name, repo_revision),
-  INDEX build_logs_v2_steps USING GIN (steps)
+  UNIQUE INDEX build_logs_v2_repo_source_repo_owner_repo_name_repo_revision_idx (repo_source, repo_owner, repo_name, repo_revision)
 );
+CREATE INDEX IF NOT EXISTS build_logs_v2_steps ON build_logs_v2 USING GIN (steps);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

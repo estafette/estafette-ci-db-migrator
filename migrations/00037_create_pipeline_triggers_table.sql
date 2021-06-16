@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS pipeline_triggers (
 	inserted_at TIMESTAMPTZ NULL DEFAULT now(),
 	updated_at TIMESTAMPTZ NULL DEFAULT now(),
 	INDEX pipeline_triggers_repo_source_repo_owner_repo_name_idx (repo_source ASC, repo_owner ASC, repo_name ASC),
-  INDEX pipeline_triggers_trigger_event_idx (trigger_event ASC),
-  INDEX pipeline_triggers_trigger_filter_idx USING GIN (trigger_filter ASC)
+  INDEX pipeline_triggers_trigger_event_idx (trigger_event ASC)
 );
+CREATE INDEX IF NOT EXISTS pipeline_triggers_trigger_filter_idx ON pipeline_triggers USING GIN (trigger_filter);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

@@ -13,10 +13,10 @@ CREATE TABLE IF NOT EXISTS catalog_entities (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   INDEX catalog_entities_parent (parent_key, parent_value),
   INDEX catalog_entities_entity (entity_key, entity_value),
-  INDEX catalog_entities_linked_pipeline (linked_pipeline),
-  INDEX catalog_entities_labels USING GIN (labels),
-  INDEX catalog_entities_entity_metadata USING GIN (entity_metadata)
+  INDEX catalog_entities_linked_pipeline (linked_pipeline)
 );
+CREATE INDEX IF NOT EXISTS catalog_entities_labels ON catalog_entities USING GIN (labels);
+CREATE INDEX IF NOT EXISTS catalog_entities_entity_metadata ON catalog_entities USING GIN (entity_metadata);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

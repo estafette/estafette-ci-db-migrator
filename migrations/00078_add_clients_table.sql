@@ -4,9 +4,9 @@ CREATE TABLE IF NOT EXISTS clients (
   id SERIAL PRIMARY KEY,
   client_data JSONB NULL,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  INDEX clients_client_data USING GIN (client_data)
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS clients_client_data ON clients USING GIN (client_data);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
