@@ -2,6 +2,7 @@ package main
 
 import (
 	"runtime"
+	"time"
 
 	"github.com/alecthomas/kingpin"
 	foundation "github.com/estafette/estafette-foundation"
@@ -30,6 +31,7 @@ var (
 	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
 	sslMode                   = kingpin.Flag("ssl-mode", "SSL Mode used to connect to cockroachdb.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
 	certificateAuthorityPath  = kingpin.Flag("ca-path", "Path to certificate authority (CA) public certificate.").Default("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt").OverrideDefaultFromEnvar("CA_PATH").String()
+	waitSeconds               = kingpin.Flag("wait-seconds", "Seconds to wait before executin.").Default("0").OverrideDefaultFromEnvar("WAIT_SECONDS").Int()
 )
 
 func main() {
@@ -38,6 +40,11 @@ func main() {
 
 	// init log format from envvar ESTAFETTE_LOG_FORMAT
 	foundation.InitLoggingFromEnv(appgroup, app, version, branch, revision, buildDate)
+
+	if *waitSeconds > 0 {
+		log.Info().Msgf("Waiting for %v seconds before executing migration...", *waitSeconds)
+		time.Sleep(time.Duration(*waitSeconds) * time.Second)
+	}
 
 	// set up database and update schema
 	cockroachDBClient := NewCockroachDBClient(*cockroachConnectionString, *cockroachDatabase, *cockroachHost, *cockroachInsecure, *sslMode, *cockroachCertificateDir, *certificateAuthorityPath, *cockroachPort, *cockroachUser, *cockroachPassword)

@@ -99,6 +99,7 @@ stages:
       COCKROACH_INSECURE: true
       COCKROACH_PORT: 5432
       ESTAFETTE_LOG_FORMAT: console
+      WAIT_SECONDS: 15
 
   push-to-docker-hub:
     image: extensions/docker:dev
