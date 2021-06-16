@@ -85,6 +85,11 @@ stages:
       image: postgres:13.3-alpine
       env:
         POSTGRES_PASSWORD: abc
+      readinessProbe:
+        httpGet:
+          path: /health?ready=1
+          port: 8080
+        timeoutSeconds: 120
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
