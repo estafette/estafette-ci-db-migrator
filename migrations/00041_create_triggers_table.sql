@@ -1,14 +1,14 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS triggers (
+CREATE TABLE triggers (
   id INT PRIMARY KEY,
   trigger_type VARCHAR(256),
   identifier VARCHAR(256),
   event_name VARCHAR(256),
-  triggers JSONB,
-  INDEX triggers_trigger_type_identifier_idx (trigger_type, identifier, event_name)
+  triggers JSONB
 );
-CREATE INDEX IF NOT EXISTS triggers_triggers ON triggers USING GIN (triggers);
+CREATE INDEX triggers_trigger_type_identifier_idx ON triggers (trigger_type, identifier, event_name);
+CREATE INDEX triggers_triggers ON triggers USING GIN (triggers);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

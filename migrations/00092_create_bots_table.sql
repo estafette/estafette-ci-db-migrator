@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS bots (
+CREATE TABLE bots (
   id SERIAL PRIMARY KEY,
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),
@@ -18,11 +18,11 @@ CREATE TABLE IF NOT EXISTS bots (
   memory_limit FLOAT8,
   memory_max_usage FLOAT8,
   organizations JSONB,
-  groups JSONB,
-  INDEX bots_get_pipeline_bots_idx (repo_source ASC, repo_owner ASC, repo_name ASC, inserted_at DESC)
+  groups JSONB
 );
-CREATE INDEX IF NOT EXISTS bots_organizations ON bots USING GIN (organizations);
-CREATE INDEX IF NOT EXISTS bots_groups ON bots USING GIN (groups);
+CREATE INDEX bots_get_pipeline_bots_idx ON bots (repo_source ASC, repo_owner ASC, repo_name ASC, inserted_at DESC);
+CREATE INDEX bots_organizations ON bots USING GIN (organizations);
+CREATE INDEX bots_groups ON bots USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

@@ -12,6 +12,6 @@ CREATE TABLE build_version_details (
   repo_branch VARCHAR(256),
   repo_revision VARCHAR(256),
   manifest TEXT,
-  inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-  UNIQUE INDEX build_version_details_build_version_repo_source_repo_full_name_idx (build_version, repo_source, repo_full_name)
+  inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
+CREATE UNIQUE INDEX build_version_details_build_version_repo_source_repo_full_name_idx ON build_version_details (build_version, repo_source, repo_full_name)

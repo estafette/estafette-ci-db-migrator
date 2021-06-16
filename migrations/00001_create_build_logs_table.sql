@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS build_logs (
+CREATE TABLE build_logs (
   id SERIAL PRIMARY KEY,
   repo_full_name VARCHAR(256),
   repo_branch VARCHAR(256),

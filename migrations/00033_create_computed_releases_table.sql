@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS computed_releases (
+CREATE TABLE computed_releases (
 	id SERIAL NOT NULL,
     release_id INT,
 	repo_source STRING(256) NULL,
@@ -14,12 +14,12 @@ CREATE TABLE IF NOT EXISTS computed_releases (
 	triggered_by STRING(256) NULL,
 	duration INTERVAL NULL DEFAULT '0s':::INTERVAL,
 	release_action VARCHAR(256) NULL DEFAULT '':::STRING,
-	first_inserted_at TIMESTAMPTZ NULL DEFAULT now(),
-	INDEX computed_releases_release_status_idx (release_status ASC),
-	INDEX computed_releases_inserted_at_idx (inserted_at ASC),
-	INDEX computed_releases_release_id_idx (release_id ASC),
-    UNIQUE INDEX computed_releases_order_by_idx (repo_source ASC, repo_owner ASC, repo_name ASC, release ASC, release_action ASC)
+	first_inserted_at TIMESTAMPTZ NULL DEFAULT now()
 );
+CREATE INDEX computed_releases_release_status_idx ON computed_releases (release_status ASC);
+CREATE INDEX computed_releases_inserted_at_idx ON computed_releases (inserted_at ASC);
+CREATE INDEX computed_releases_release_id_idx ON computed_releases (release_id ASC);
+CREATE UNIQUE INDEX computed_releases_order_by_idx ON computed_releases (repo_source ASC, repo_owner ASC, repo_name ASC, release ASC, release_action ASC);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

@@ -1,7 +1,7 @@
 -- +goose NO TRANSACTION
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS builds (
+CREATE TABLE builds (
   id SERIAL PRIMARY KEY,
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),
@@ -15,8 +15,8 @@ CREATE TABLE IF NOT EXISTS builds (
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
-CREATE UNIQUE INDEX IF NOT EXISTS builds_repo_source_repo_owner_repo_name_repo_revision_idx ON builds (repo_source, repo_owner, repo_name, repo_revision);
-CREATE INDEX IF NOT EXISTS builds_labels ON builds USING GIN (labels);
+CREATE UNIQUE INDEX builds_repo_source_repo_owner_repo_name_repo_revision_idx ON builds (repo_source, repo_owner, repo_name, repo_revision);
+CREATE INDEX builds_labels ON builds USING GIN (labels);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

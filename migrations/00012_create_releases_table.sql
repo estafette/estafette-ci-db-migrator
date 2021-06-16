@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-CREATE TABLE IF NOT EXISTS releases (
+CREATE TABLE releases (
   id SERIAL PRIMARY KEY,
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),

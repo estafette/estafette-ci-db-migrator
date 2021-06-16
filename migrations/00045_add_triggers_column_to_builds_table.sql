@@ -2,7 +2,7 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 ALTER TABLE builds ADD triggers JSONB;
-CREATE INDEX IF NOT EXISTS builds_triggers ON builds USING GIN (triggers);
+CREATE INDEX builds_triggers ON builds USING GIN (triggers);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
