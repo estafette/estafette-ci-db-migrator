@@ -11,7 +11,7 @@ CREATE TABLE notifications (
   organizations JSONB,
   groups JSONB
 );
-CREATE INDEX notifications_get_link_notifications_idx ON notifications (link_type ASC, link_id ASC, inserted_at DESC)
+CREATE INDEX notifications_get_link_notifications_idx ON notifications (link_type ASC, link_id ASC, inserted_at DESC);
 CREATE INDEX notifications_link_detail ON notifications USING GIN (link_detail);
 CREATE INDEX notifications_organizations ON notifications USING GIN (organizations);
 CREATE INDEX notifications_groups ON notifications USING GIN (groups);
