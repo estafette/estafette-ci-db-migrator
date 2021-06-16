@@ -2,8 +2,8 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 ALTER TABLE computed_pipelines ADD organizations JSONB, ADD COLUMN groups JSONB;
-CREATE INVERTED INDEX computed_pipelines_organizations ON computed_pipelines (organizations);
-CREATE INVERTED INDEX computed_pipelines_groups ON computed_pipelines (groups);
+CREATE INDEX computed_pipelines_organizations ON computed_pipelines USING GIN (organizations);
+CREATE INDEX computed_pipelines_groups ON computed_pipelines USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

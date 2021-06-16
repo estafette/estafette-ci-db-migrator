@@ -2,8 +2,8 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 ALTER TABLE builds ADD organizations JSONB, ADD COLUMN groups JSONB;
-CREATE INVERTED INDEX builds_organizations ON builds (organizations);
-CREATE INVERTED INDEX builds_groups ON builds (groups);
+CREATE INDEX builds_organizations ON builds USING GIN (organizations);
+CREATE INDEX builds_groups ON builds USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

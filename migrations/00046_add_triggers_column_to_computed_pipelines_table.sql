@@ -2,7 +2,7 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 ALTER TABLE computed_pipelines ADD triggers JSONB;
-CREATE INVERTED INDEX IF NOT EXISTS computed_pipelines_triggers ON computed_pipelines (triggers);
+CREATE INDEX IF NOT EXISTS computed_pipelines_triggers ON computed_pipelines USING GIN (triggers);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
