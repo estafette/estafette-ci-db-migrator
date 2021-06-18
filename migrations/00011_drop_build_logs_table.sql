@@ -6,10 +6,10 @@ DROP TABLE IF EXISTS build_logs;
 -- SQL in this section is executed when the migration is rolled back.
 CREATE TABLE build_logs (
 	id SERIAL PRIMARY KEY,
-	repo_full_name STRING(256) NULL,
-	repo_branch STRING(256) NULL,
-	repo_revision STRING(256) NULL,
-	repo_source STRING(256) NULL,
+	repo_full_name VARCHAR(256) NULL,
+	repo_branch VARCHAR(256) NULL,
+	repo_revision VARCHAR(256) NULL,
+	repo_source VARCHAR(256) NULL,
 	log_text STRING NULL,
 	inserted_at TIMESTAMP NULL DEFAULT now()
 );

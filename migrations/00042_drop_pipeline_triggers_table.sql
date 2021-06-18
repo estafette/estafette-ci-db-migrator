@@ -9,7 +9,7 @@ CREATE TABLE pipeline_triggers (
   repo_source VARCHAR(256),
   repo_owner VARCHAR(256),
   repo_name VARCHAR(256),
-	trigger_event STRING(256) NULL,
+	trigger_event VARCHAR(256) NULL,
   trigger_filter JSONB,
   trigger_run JSONB,
 	inserted_at TIMESTAMPTZ NULL DEFAULT now(),
