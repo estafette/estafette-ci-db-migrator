@@ -6,7 +6,7 @@ CREATE TABLE notifications (
   link_id VARCHAR(256),
   link_detail JSONB,
   source VARCHAR(256),
-  notifications JSONB NULL,
+  notifications JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   organizations JSONB,
   groups JSONB

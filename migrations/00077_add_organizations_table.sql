@@ -2,7 +2,7 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE organizations (
   id SERIAL PRIMARY KEY,
-  organization_data JSONB NULL,
+  organization_data JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );

@@ -2,7 +2,7 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE groups (
   id SERIAL PRIMARY KEY,
-  group_data JSONB NULL,
+  group_data JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );

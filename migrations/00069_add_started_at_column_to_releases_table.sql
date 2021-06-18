@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-ALTER TABLE releases ADD started_at TIMESTAMPTZ NULL;
+ALTER TABLE releases ADD started_at TIMESTAMPTZ;
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

@@ -2,7 +2,7 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  user_data JSONB NULL,
+  user_data JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );

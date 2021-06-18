@@ -2,13 +2,13 @@
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE catalog_entities (
   id SERIAL PRIMARY KEY,
-  parent_key VARCHAR(256) NULL,
-  parent_value VARCHAR(256) NULL,
-  entity_key VARCHAR(256) NULL,
-  entity_value VARCHAR(256) NULL,
-  linked_pipeline VARCHAR(256) NULL,
-  labels JSONB NULL,
-  entity_metadata JSONB NULL,
+  parent_key VARCHAR(256),
+  parent_value VARCHAR(256),
+  entity_key VARCHAR(256),
+  entity_value VARCHAR(256),
+  linked_pipeline VARCHAR(256),
+  labels JSONB,
+  entity_metadata JSONB,
   inserted_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
