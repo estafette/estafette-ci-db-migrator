@@ -5,5 +5,5 @@ CREATE INDEX organizations_active ON organizations (active);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX organizations_active@organizations;
+DROP INDEX organizations;
 ALTER TABLE organizations DROP active;

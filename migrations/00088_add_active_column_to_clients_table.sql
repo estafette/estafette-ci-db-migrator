@@ -5,5 +5,5 @@ CREATE INDEX clients_active ON clients (active);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX clients_active@clients;
+DROP INDEX clients;
 ALTER TABLE clients DROP active;

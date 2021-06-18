@@ -7,6 +7,6 @@ CREATE INDEX computed_releases_groups ON computed_releases USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX computed_releases@computed_releases_organizations;
-DROP INDEX computed_releases@computed_releases_groups;
+DROP INDEX computed_releases_organizations;
+DROP INDEX computed_releases_groups;
 ALTER TABLE computed_releases DROP organizations, DROP groups;

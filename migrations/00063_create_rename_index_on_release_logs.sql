@@ -4,4 +4,4 @@ CREATE INDEX release_logs_rename_idx ON release_logs (repo_source, repo_owner, r
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX IF EXISTS release_logs@release_logs_rename_idx;
+DROP INDEX release_logs_rename_idx;

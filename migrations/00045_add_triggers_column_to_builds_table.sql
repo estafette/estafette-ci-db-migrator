@@ -6,5 +6,5 @@ CREATE INDEX builds_triggers ON builds USING GIN (triggers);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX builds@builds_triggers;
+DROP INDEX builds_triggers;
 ALTER TABLE builds DROP triggers;

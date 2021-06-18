@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-DROP INDEX release_logs@release_logs_steps;
+DROP INDEX release_logs_steps;
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.

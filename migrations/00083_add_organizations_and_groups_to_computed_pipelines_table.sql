@@ -7,6 +7,6 @@ CREATE INDEX computed_pipelines_groups ON computed_pipelines USING GIN (groups);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX computed_pipelines@computed_pipelines_organizations;
-DROP INDEX computed_pipelines@computed_pipelines_groups;
+DROP INDEX computed_pipelines_organizations;
+DROP INDEX computed_pipelines_groups;
 ALTER TABLE computed_pipelines DROP organizations, DROP groups;

@@ -6,5 +6,5 @@ CREATE INDEX computed_pipelines_triggers ON computed_pipelines USING GIN (trigge
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX computed_pipelines@computed_pipelines_triggers;
+DROP INDEX computed_pipelines_triggers;
 ALTER TABLE computed_pipelines DROP triggers;

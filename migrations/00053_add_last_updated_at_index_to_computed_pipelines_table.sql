@@ -4,4 +4,4 @@ CREATE INDEX computed_pipelines_last_updated_at_idx ON computed_pipelines (last_
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX computed_pipelines@computed_pipelines_last_updated_at_idx;
+DROP INDEX computed_pipelines_last_updated_at_idx;

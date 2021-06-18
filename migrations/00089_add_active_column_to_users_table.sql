@@ -5,5 +5,5 @@ CREATE INDEX users_active ON users (active);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX users_active@users;
+DROP INDEX users;
 ALTER TABLE users DROP active;

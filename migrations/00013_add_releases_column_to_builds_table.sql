@@ -6,5 +6,5 @@ CREATE INDEX builds_releases ON builds USING GIN (releases);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX builds@builds_releases;
+DROP INDEX builds_releases;
 ALTER TABLE builds DROP releases;

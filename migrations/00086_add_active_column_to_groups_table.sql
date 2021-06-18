@@ -5,5 +5,5 @@ CREATE INDEX groups_active ON groups (active);
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-DROP INDEX groups_active@groups;
+DROP INDEX groups;
 ALTER TABLE groups DROP active;
