@@ -15,7 +15,7 @@ CREATE TABLE computed_pipelines (
 	inserted_at TIMESTAMPTZ NULL DEFAULT now(),
 	updated_at TIMESTAMPTZ NULL DEFAULT now(),
 	commits JSONB NULL,
-	duration INTERVAL NULL DEFAULT '0s':::INTERVAL,
+	duration INTERVAL NULL DEFAULT '0s',
 	release_targets JSONB NULL
 );
 CREATE INDEX computed_pipelines_build_status_idx ON computed_pipelines (build_status ASC);

@@ -12,7 +12,7 @@ CREATE TABLE computed_releases (
 	inserted_at TIMESTAMPTZ NULL DEFAULT now(),
 	updated_at TIMESTAMPTZ NULL DEFAULT now(),
 	triggered_by STRING(256) NULL,
-	duration INTERVAL NULL DEFAULT '0s':::INTERVAL,
+	duration INTERVAL NULL DEFAULT '0s',
 	release_action VARCHAR(256) NULL DEFAULT '':::STRING,
 	first_inserted_at TIMESTAMPTZ NULL DEFAULT now()
 );
