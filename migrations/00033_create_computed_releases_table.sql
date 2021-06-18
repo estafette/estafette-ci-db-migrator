@@ -1,8 +1,8 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
 CREATE TABLE computed_releases (
-	id SERIAL NOT,
-    release_id INT,
+	id SERIAL PRIMARY KEY,
+  release_id INT,
 	repo_source VARCHAR(256),
 	repo_owner VARCHAR(256),
 	repo_name VARCHAR(256),
@@ -13,7 +13,7 @@ CREATE TABLE computed_releases (
 	updated_at TIMESTAMPTZ DEFAULT now(),
 	triggered_by VARCHAR(256),
 	duration INTERVAL DEFAULT '0s',
-	release_action VARCHAR(256) DEFAULT '':::STRING,
+	release_action VARCHAR(256) DEFAULT '',
 	first_inserted_at TIMESTAMPTZ DEFAULT now()
 );
 CREATE INDEX computed_releases_release_status_idx ON computed_releases (release_status ASC);
