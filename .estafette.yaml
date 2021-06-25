@@ -64,7 +64,6 @@ stages:
     services:
     - name: estafette-ci-db-public
       image: cockroachdb/cockroach:v21.1.2
-      shell: /bin/bash
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
