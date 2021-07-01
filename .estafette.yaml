@@ -63,7 +63,7 @@ stages:
   test-migration-against-cockroachdb:
     services:
     - name: estafette-ci-db-public
-      image: cockroachdb/cockroach:v21.1.2
+      image: cockroachdb/cockroach:v21.1.4
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
@@ -124,7 +124,7 @@ stages:
     action: test
     repoUrl: https://charts.cockroachdb.com/
     chart: cockroachdb
-    version: 5.0.6
+    version: 6.0.5
     release: estafette-ci-db
     values: |-
       conf:
