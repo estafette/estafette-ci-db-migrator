@@ -11,9 +11,9 @@ version:
   semver:
     major: 1
     minor: 0
-    patch: 4
+    patch: 5
     labelTemplate: '{{branch}}-{{auto}}'
-    releaseBranch: 1.0.4
+    releaseBranch: 1.0.5
 
 stages:
   build-lint-and-package:
@@ -63,7 +63,7 @@ stages:
   test-migration-against-cockroachdb:
     services:
     - name: estafette-ci-db-public
-      image: cockroachdb/cockroach:v21.1.7
+      image: cockroachdb/cockroach:v21.1.8
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
       readiness:
@@ -220,3 +220,4 @@ releases:
 
       create-github-release:
         image: extensions/github-release:dev
+        ignoreMissingMilestone: true
