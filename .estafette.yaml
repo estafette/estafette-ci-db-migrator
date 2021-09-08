@@ -141,9 +141,9 @@ stages:
     values: |-
       job:
         env:
-        - name: INSECURE
+        - name: DB_INSECURE
           value: 'true'
-        - name: HOST
+        - name: DB_HOST
           value: cockroachdb-public
 
   clone-charts-repo:
