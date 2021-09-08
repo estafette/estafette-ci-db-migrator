@@ -2,7 +2,6 @@ package main
 
 import (
 	"runtime"
-	"time"
 
 	"github.com/alecthomas/kingpin"
 	foundation "github.com/estafette/estafette-foundation"
@@ -32,7 +31,6 @@ var (
 	certificateAuthorityPath = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/cockroach-certs/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
 	certificatePath          = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/tls.crt").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
 	certificateKeyPath       = kingpin.Flag("ssl-key-path", "Path to certificate key.").Default("/cockroach-certs/tls.key").OverrideDefaultFromEnvar("SSL_KEY_PATH").String()
-	waitSeconds              = kingpin.Flag("wait-seconds", "Seconds to wait before executin.").Default("0").OverrideDefaultFromEnvar("WAIT_SECONDS").Int()
 )
 
 func main() {
@@ -41,11 +39,6 @@ func main() {
 
 	// init log format from envvar ESTAFETTE_LOG_FORMAT
 	foundation.InitLoggingFromEnv(foundation.NewApplicationInfo(appgroup, app, version, branch, revision, buildDate))
-
-	if *waitSeconds > 0 {
-		log.Info().Msgf("Waiting for %v seconds before executing migration...", *waitSeconds)
-		time.Sleep(time.Duration(*waitSeconds) * time.Second)
-	}
 
 	// set up database and update schema
 	dbClient := NewDBClient(*connectionString, *database, *host, *insecure, *sslMode, *certificateAuthorityPath, *certificatePath, *certificateKeyPath, *port, *user, *password)
