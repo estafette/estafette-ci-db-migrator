@@ -75,7 +75,7 @@ stages:
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
-      INSECURE: true
+      DB_INSECURE: true
       ESTAFETTE_LOG_FORMAT: console
 
   test-migration-against-postgres:
@@ -92,12 +92,12 @@ stages:
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
-      USER: postgres
-      PASSWORD: abc
-      DATABASE: postgres
-      INSECURE: true
-      PORT: 5432
-      ESTAFETTE_LOG_FORMAT: console
+      DB_USER: postgres
+      DB_PASSWORD: abc
+      DB_DATABASE: postgres
+      DB_INSECURE: true
+      DB_PORT: 5432
+      DB_ESTAFETTE_LOG_FORMAT: console
 
   push-to-docker-hub:
     image: extensions/docker:dev

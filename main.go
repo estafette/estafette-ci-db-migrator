@@ -20,13 +20,13 @@ var (
 
 var (
 	// flags
-	database                 = kingpin.Flag("database", "Database name.").Default("defaultdb").OverrideDefaultFromEnvar("DATABASE").String()
-	host                     = kingpin.Flag("host", "Database host.").Default("estafette-ci-db-public").OverrideDefaultFromEnvar("HOST").String()
-	insecure                 = kingpin.Flag("insecure", "Insecure connection.").Default("false").OverrideDefaultFromEnvar("INSECURE").Bool()
-	port                     = kingpin.Flag("port", "Database port.").Default("26257").OverrideDefaultFromEnvar("PORT").Int()
-	user                     = kingpin.Flag("user", "Database user.").Default("root").OverrideDefaultFromEnvar("USER").String()
-	password                 = kingpin.Flag("password", "Database password.").Envar("PASSWORD").String()
-	connectionString         = kingpin.Flag("connection-string", "Database connection string.").Envar("CONNECTION_STRING").String()
+	database                 = kingpin.Flag("database", "Database name.").Default("defaultdb").OverrideDefaultFromEnvar("DB_DATABASE").String()
+	host                     = kingpin.Flag("host", "Database host.").Default("estafette-ci-db-public").OverrideDefaultFromEnvar("DB_HOST").String()
+	insecure                 = kingpin.Flag("insecure", "Insecure connection.").Default("false").OverrideDefaultFromEnvar("DB_INSECURE").Bool()
+	port                     = kingpin.Flag("port", "Database port.").Default("26257").OverrideDefaultFromEnvar("DB_PORT").Int()
+	user                     = kingpin.Flag("user", "Database user.").Default("root").OverrideDefaultFromEnvar("DB_USER").String()
+	password                 = kingpin.Flag("password", "Database password.").Envar("DB_PASSWORD").String()
+	connectionString         = kingpin.Flag("connection-string", "Database connection string.").Envar("DB_CONNECTION_STRING").String()
 	sslMode                  = kingpin.Flag("ssl-mode", "SSL Mode used to connect to database.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
 	certificateAuthorityPath = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/cockroach-certs/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
 	certificatePath          = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/tls.crt").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
