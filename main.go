@@ -29,9 +29,9 @@ var (
 	cockroachPassword         = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
 	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
 	sslMode                   = kingpin.Flag("ssl-mode", "SSL Mode used to connect to cockroachdb.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
-	certificateAuthorityPath  = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/var/run/secrets/kubernetes.io/serviceaccount/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
-	certificatePath           = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/cert").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
-	certificateKeyPath        = kingpin.Flag("ssl-key-path", "Path to certificate key.").Default("/cockroach-certs/key").OverrideDefaultFromEnvar("SSL_KEY_PATH").String()
+	certificateAuthorityPath  = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/cockroach-certs/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
+	certificatePath           = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/tls.crt").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
+	certificateKeyPath        = kingpin.Flag("ssl-key-path", "Path to certificate key.").Default("/cockroach-certs/tls.key").OverrideDefaultFromEnvar("SSL_KEY_PATH").String()
 	waitSeconds               = kingpin.Flag("wait-seconds", "Seconds to wait before executin.").Default("0").OverrideDefaultFromEnvar("WAIT_SECONDS").Int()
 )
 
