@@ -180,9 +180,7 @@ releases:
         container:
           repository: estafette
           env:
-            DATABASE: estafette.secret(dvU0YFtbQeLg03F_.eQp-XyPGfDhcN7ErIZaf83ZXsacxH7WPQC_GnQGz5Iw=.exB-VjDBJi9WBf0nDYOO_Asnu3YLMfCzrEgAGOjgj73w-NdktL7g6klqIW--t0KO6MzjReO-iKeFL8EvZQ==)
-            HOST: estafette.secret(55_ox0L164bPLo4D.DXZLxriEZL91JquH6Wj1DxLsFpaadLW6cL2oO6r6_YEh-PsV_mJyS5mPZA49_pCZ9Viv4TI1Eo25IMYcpvkXTGA=.CXBcxb-JK79yL-bP6mn2BR77TJbGZaeodK-5KvP8ucw7o_xZsGNuX5-LYk8jKY08cX5gD7cAsAVLttLGug==)
-            USER: estafette.secret(CJ9f-SH3okHZ_vR8.EtN7YKlj07HMQH_6iqNdk454Rr0UyRpo.GNNoer11kqAOSAnHbc-XVs0cfUBMGKi7IMoKsxuht6GjbE-215zO8cATQA-f8C91Ruvayh9bb620EOycQw==)
+            DB_DATABASE: estafette.secret(dvU0YFtbQeLg03F_.eQp-XyPGfDhcN7ErIZaf83ZXsacxH7WPQC_GnQGz5Iw=.exB-VjDBJi9WBf0nDYOO_Asnu3YLMfCzrEgAGOjgj73w-NdktL7g6klqIW--t0KO6MzjReO-iKeFL8EvZQ==)
             ESTAFETTE_LOG_FORMAT: v3
           cpu:
             request: 200m
@@ -195,7 +193,7 @@ releases:
           mountpath: /cockroach-certs
           volume:
             secret:
-              secretName: estafette-ci.client.migrator
+              secretName: estafette-ci-db-client-secret
               defaultMode: 0400
 
       slack-notify:
