@@ -21,18 +21,18 @@ var (
 
 var (
 	// flags
-	cockroachDatabase         = kingpin.Flag("cockroach-database", "CockroachDB database.").Default("defaultdb").OverrideDefaultFromEnvar("COCKROACH_DATABASE").String()
-	cockroachHost             = kingpin.Flag("cockroach-host", "CockroachDB host.").Default("estafette-ci-db-public").OverrideDefaultFromEnvar("COCKROACH_HOST").String()
-	cockroachInsecure         = kingpin.Flag("cockroach-insecure", "CockroachDB insecure connection.").Default("false").OverrideDefaultFromEnvar("COCKROACH_INSECURE").Bool()
-	cockroachPort             = kingpin.Flag("cockroach-port", "CockroachDB port.").Default("26257").OverrideDefaultFromEnvar("COCKROACH_PORT").Int()
-	cockroachUser             = kingpin.Flag("cockroach-user", "CockroachDB user.").Default("root").OverrideDefaultFromEnvar("COCKROACH_USER").String()
-	cockroachPassword         = kingpin.Flag("cockroach-password", "CockroachDB password.").Envar("COCKROACH_PASSWORD").String()
-	cockroachConnectionString = kingpin.Flag("cockroach-connection-string", "CockroachDB connection string.").Envar("COCKROACH_CONNECTION_STRING").String()
-	sslMode                   = kingpin.Flag("ssl-mode", "SSL Mode used to connect to cockroachdb.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
-	certificateAuthorityPath  = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/cockroach-certs/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
-	certificatePath           = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/tls.crt").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
-	certificateKeyPath        = kingpin.Flag("ssl-key-path", "Path to certificate key.").Default("/cockroach-certs/tls.key").OverrideDefaultFromEnvar("SSL_KEY_PATH").String()
-	waitSeconds               = kingpin.Flag("wait-seconds", "Seconds to wait before executin.").Default("0").OverrideDefaultFromEnvar("WAIT_SECONDS").Int()
+	database                 = kingpin.Flag("database", "Database name.").Default("defaultdb").OverrideDefaultFromEnvar("DATABASE").String()
+	host                     = kingpin.Flag("host", "Database host.").Default("estafette-ci-db-public").OverrideDefaultFromEnvar("HOST").String()
+	insecure                 = kingpin.Flag("insecure", "Insecure connection.").Default("false").OverrideDefaultFromEnvar("INSECURE").Bool()
+	port                     = kingpin.Flag("port", "Database port.").Default("26257").OverrideDefaultFromEnvar("PORT").Int()
+	user                     = kingpin.Flag("user", "Database user.").Default("root").OverrideDefaultFromEnvar("USER").String()
+	password                 = kingpin.Flag("password", "Database password.").Envar("PASSWORD").String()
+	connectionString         = kingpin.Flag("connection-string", "Database connection string.").Envar("CONNECTION_STRING").String()
+	sslMode                  = kingpin.Flag("ssl-mode", "SSL Mode used to connect to database.").Default("verify-full").OverrideDefaultFromEnvar("SSL_MODE").String()
+	certificateAuthorityPath = kingpin.Flag("ssl-ca-path", "Path to certificate authority (CA) public certificate.").Default("/cockroach-certs/ca.crt").OverrideDefaultFromEnvar("SSL_CA_PATH").String()
+	certificatePath          = kingpin.Flag("ssl-cert-path", "Path to public certificate.").Default("/cockroach-certs/tls.crt").OverrideDefaultFromEnvar("SSL_CERT_PATH").String()
+	certificateKeyPath       = kingpin.Flag("ssl-key-path", "Path to certificate key.").Default("/cockroach-certs/tls.key").OverrideDefaultFromEnvar("SSL_KEY_PATH").String()
+	waitSeconds              = kingpin.Flag("wait-seconds", "Seconds to wait before executin.").Default("0").OverrideDefaultFromEnvar("WAIT_SECONDS").Int()
 )
 
 func main() {
@@ -48,12 +48,19 @@ func main() {
 	}
 
 	// set up database and update schema
-	cockroachDBClient := NewCockroachDBClient(*cockroachConnectionString, *cockroachDatabase, *cockroachHost, *cockroachInsecure, *sslMode, *certificateAuthorityPath, *certificatePath, *certificateKeyPath, *cockroachPort, *cockroachUser, *cockroachPassword)
-	err := cockroachDBClient.Connect()
+	dbClient := NewDBClient(*connectionString, *database, *host, *insecure, *sslMode, *certificateAuthorityPath, *certificatePath, *certificateKeyPath, *port, *user, *password)
+
+	err := dbClient.Connect()
 	if err != nil {
 		log.Warn().Err(err).Msg("Failed connecting to database")
 	}
-	err = cockroachDBClient.MigrateSchema()
+
+	err = dbClient.AwaitdatabaseReadiness()
+	if err != nil {
+		log.Warn().Err(err).Msg("Failed due database not being ready")
+	}
+
+	err = dbClient.MigrateSchema()
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed migrating database schema")
 	}
