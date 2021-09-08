@@ -55,7 +55,7 @@ func main() {
 		log.Warn().Err(err).Msg("Failed connecting to database")
 	}
 
-	err = dbClient.AwaitdatabaseReadiness()
+	err = dbClient.AwaitDatabaseReadiness()
 	if err != nil {
 		log.Warn().Err(err).Msg("Failed due database not being ready")
 	}

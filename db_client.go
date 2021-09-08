@@ -16,7 +16,7 @@ import (
 type DBClient interface {
 	Connect() error
 	ConnectWithDriverAndSource(string, string) error
-	AwaitdatabaseReadiness() (err error)
+	AwaitDatabaseReadiness() (err error)
 	MigrateSchema() error
 }
 
@@ -92,7 +92,7 @@ func (c *dbClient) ConnectWithDriverAndSource(driverName string, dataSourceName 
 	return
 }
 
-func (c *dbClient) AwaitdatabaseReadiness() (err error) {
+func (c *dbClient) AwaitDatabaseReadiness() (err error) {
 	return foundation.Retry(func() error {
 		return c.databaseConnection.Ping()
 	}, foundation.Attempts(12), foundation.DelayMillisecond(5000), foundation.Fixed())
