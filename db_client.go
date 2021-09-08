@@ -94,6 +94,7 @@ func (c *dbClient) ConnectWithDriverAndSource(driverName string, dataSourceName 
 
 func (c *dbClient) AwaitDatabaseReadiness() (err error) {
 	return foundation.Retry(func() error {
+		log.Info().Msg("Checking if database is ready...")
 		return c.databaseConnection.Ping()
 	}, foundation.Attempts(12), foundation.DelayMillisecond(5000), foundation.Fixed())
 }
