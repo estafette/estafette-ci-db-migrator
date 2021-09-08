@@ -145,6 +145,8 @@ stages:
           value: 'true'
         - name: DB_HOST
           value: cockroachdb-public
+        extraVolumes: |
+        extraVolumeMounts: |
 
   clone-charts-repo:
     image: extensions/git-clone:dev
