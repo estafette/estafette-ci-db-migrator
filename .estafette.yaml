@@ -140,7 +140,7 @@ stages:
     action: test
     values: |-
       job:
-        env:
+        extraEnv:
         - name: DB_INSECURE
           value: 'true'
         - name: DB_HOST
