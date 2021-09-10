@@ -13,25 +13,15 @@ version:
     minor: 0
 
 stages:
-  build-lint-and-package:
-    parallelStages:
-      build:
-        image: golang:1.17-alpine
-        env:
-          CGO_ENABLED: 0
-          GOOS: linux
-          GOGC: off
-        commands:
-        - go test -short ./...
-        - go build -a -installsuffix cgo -ldflags "-X main.appgroup=${ESTAFETTE_LABEL_APP_GROUP} -X main.app=${ESTAFETTE_GIT_NAME} -X main.version=${ESTAFETTE_BUILD_VERSION} -X main.revision=${ESTAFETTE_GIT_REVISION} -X main.branch=${ESTAFETTE_GIT_BRANCH} -X main.buildDate=${ESTAFETTE_BUILD_DATETIME}" -o ./publish/${ESTAFETTE_GIT_NAME} .
-
-      lint-helm-chart:
-        image: extensions/helm:dev
-        action: lint
-
-      package-helm-chart:
-        image: extensions/helm:dev
-        action: package
+  build:
+    image: golang:1.17-alpine
+    env:
+      CGO_ENABLED: 0
+      GOOS: linux
+      GOGC: off
+    commands:
+    - go test -short ./...
+    - go build -a -installsuffix cgo -ldflags "-X main.appgroup=${ESTAFETTE_LABEL_APP_GROUP} -X main.app=${ESTAFETTE_GIT_NAME} -X main.version=${ESTAFETTE_BUILD_VERSION} -X main.revision=${ESTAFETTE_GIT_REVISION} -X main.branch=${ESTAFETTE_GIT_BRANCH} -X main.buildDate=${ESTAFETTE_BUILD_DATETIME}" -o ./publish/${ESTAFETTE_GIT_NAME} .
 
   bake:
     image: extensions/docker:dev
@@ -106,55 +96,6 @@ stages:
     - ${ESTAFETTE_BUILD_VERSION_MAJOR}
     - latest
 
-  start-kind:
-    services:
-    - name: kubernetes
-      image: bsycorp/kind:latest-1.19
-      readiness:
-        path: /kubernetes-ready
-        port: 10080
-        timeoutSeconds: 120
-
-  install-db:
-    image: extensions/helm:dev
-    action: test
-    repoUrl: https://charts.cockroachdb.com/
-    chart: cockroachdb
-    version: 6.0.5
-    release: estafette-ci-db
-    values: |-
-      conf:
-        single-node: true
-      statefulset:
-        replicas: 1
-      storage:
-        persistentVolume:
-          enabled: false
-          size: 1Gi
-
-  test-helm-chart:
-    image: extensions/helm:dev
-    action: test
-    values: |-
-      job:
-        extraEnv:
-        - name: DB_INSECURE
-          value: 'true'
-        - name: DB_HOST
-          value: cockroachdb-public
-        extraVolumes: |
-        extraVolumeMounts: |
-
-  clone-charts-repo:
-    image: extensions/git-clone:dev
-    repo: helm-charts
-    branch: main
-
-  publish-helm-chart:
-    image: extensions/helm:dev
-    action: publish
-    repoBranch: main
-
   slack-notify:
     image: extensions/slack-build-status:dev
     workspace: estafette
@@ -163,20 +104,3 @@ stages:
     when:
       status == 'succeeded' ||
       status == 'failed'
-
-releases:
-  release:
-    stages:
-      clone-charts-repo:
-        image: extensions/git-clone:dev
-        repo: helm-charts
-        branch: main
-
-      purge-prerelease-helm-charts:
-        image: extensions/helm:dev
-        action: purge
-        repoBranch: main
-
-      create-github-release:
-        image: extensions/github-release:dev
-        ignoreMissingMilestone: true
