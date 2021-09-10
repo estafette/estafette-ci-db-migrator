@@ -168,43 +168,6 @@ stages:
       status == 'failed'
 
 releases:
-  tooling-estafette:
-    stages:
-      git-clone:
-        image: extensions/git-clone:dev
-
-      run-job:
-        image: extensions/gke:dev
-        kind: job
-        namespace: estafette-ci
-        container:
-          repository: estafette
-          env:
-            DB_DATABASE: estafette.secret(dvU0YFtbQeLg03F_.eQp-XyPGfDhcN7ErIZaf83ZXsacxH7WPQC_GnQGz5Iw=.exB-VjDBJi9WBf0nDYOO_Asnu3YLMfCzrEgAGOjgj73w-NdktL7g6klqIW--t0KO6MzjReO-iKeFL8EvZQ==)
-            ESTAFETTE_LOG_FORMAT: v3
-          cpu:
-            request: 200m
-            limit: 200m
-          memory:
-            request: 512Mi
-            limit: 512Mi
-        volumemounts:
-        - name: client-certs
-          mountpath: /cockroach-certs
-          volume:
-            secret:
-              secretName: estafette-ci-db-client-secret
-              defaultMode: 0400
-
-      slack-notify:
-        image: extensions/slack-build-status:dev
-        workspace: estafette
-        channels:
-        - '#build-status'
-        when:
-          status == 'succeeded' ||
-          status == 'failed'
-
   release:
     stages:
       clone-charts-repo:
