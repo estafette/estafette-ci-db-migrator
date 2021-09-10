@@ -38,12 +38,16 @@ spec:
             {{- toYaml .Values.job.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.job.env }}
           env:
+          - name: "ESTAFETTE_LOG_FORMAT"
+            value: "{{ .Values.logFormat }}"
+          - name: "ESTAFETTE_LOG_LEVEL"
+            value: "{{ .Values.logLevel }}"
+          {{- with .Values.job.extraEnv }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.job.resources | nindent 12 }}
           {{- if or .Values.job.extraVolumeMounts .Values.extraConfigmaps .Values.extraSecrets }}
           volumeMounts:
           {{- range .Values.extraConfigmaps }}
