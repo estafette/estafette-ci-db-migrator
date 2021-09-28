@@ -49,7 +49,7 @@ stages:
 
   test-migration-against-cockroachdb:
     services:
-    - name: estafette-ci-db-public
+    - name: cockroachdb
       image: cockroachdb/cockroach:v21.1.8
       env:
         COCKROACH_SKIP_ENABLING_DIAGNOSTIC_REPORTING: "true"
@@ -62,12 +62,13 @@ stages:
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
+      DB_HOST: cockroachdb
       DB_INSECURE: true
       ESTAFETTE_LOG_FORMAT: console
 
   test-migration-against-postgres:
     services:
-    - name: estafette-ci-db-public
+    - name: postgres
       image: postgres:13.3-alpine
       env:
         POSTGRES_PASSWORD: abc
@@ -79,6 +80,7 @@ stages:
 
     image: estafette/estafette-ci-db-migrator:${ESTAFETTE_BUILD_VERSION}
     env:
+      DB_HOST: postgres
       DB_USER: postgres
       DB_PASSWORD: abc
       DB_DATABASE: postgres
