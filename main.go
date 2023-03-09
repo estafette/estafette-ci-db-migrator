@@ -1,8 +1,6 @@
 package main
 
 import (
-	"runtime"
-
 	"github.com/alecthomas/kingpin"
 	foundation "github.com/estafette/estafette-foundation"
 	"github.com/rs/zerolog/log"
@@ -15,7 +13,6 @@ var (
 	branch    string
 	revision  string
 	buildDate string
-	goVersion = runtime.Version()
 )
 
 var (

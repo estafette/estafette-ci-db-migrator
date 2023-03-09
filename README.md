@@ -22,7 +22,7 @@ To add a new migration script
 ```bash
 go get -u github.com/pressly/goose/cmd/goose
 cd migrations
-goose create create_some_table sql
+goose -s create create_some_table sql
 ```
 
 And then edit the newly created script in the migrations folder.
